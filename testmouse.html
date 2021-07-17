@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <style>
+
+
+body{
+    display:flex;
+    flex-flow: row;
+    justify-content: space-around;
+}
+        #box1{
+            background-color: aqua;
+            position: fixed;
+        }
+div{
+    width:200px;
+    height: 200px;
+}
+        #box2{
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="box1">
+         
+
+    </div>
+    <div id="box2" class="box2">
+
+
+    </div>
+
+    <canvas width="500" height="500"> </canvas>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+          
+          let canvas = document.querySelector("canvas");
+          let context = canvas.getContext("2d");
+          let image = new Image();
+          
+          let box1 = document.querySelector("#box1");
+            image.src = "./the-thong-minh-tappi-7-1024x1024.jpg"
+canvas.style.border = "2px solid green";
+            image.onload = function(ev){
+                context.drawImage(image,0,0,450,450);
+            }
+            let imageWidth = 450;
+            let imageHeight = 450;
+            let draggable = false;
+            currentX = imageWidth/2;
+            currentY = imageHeight/2;
+            canvas.addEventListener("mousedown",function(ev){
+                
+                if (ev.offsetX  <= (currentX + imageWidth/2)  && ev.offsetY <= (currentY + imageHeight/2) &&
+                    ev.offsetX >= (currentX - imageWidth/2) && ev.offsetY >= (currentY - imageHeight/2)
+                ) {
+                    draggable = true;
+                }
+               
+            })
+            
+            canvas.addEventListener("mousemove",function(ev){
+                 if(draggable === true){
+       
+                   currentX = ev.offsetX;
+                   currentY = ev.offsetY;
+                   setInterval(()=>{
+                    context.clearRect(0,0,500,500)
+                      context.drawImage(image,currentX - 450/2,currentY - 450/2)
+                   },1)
+                 }
+                 console.log(currentX)
+            })
+            canvas.addEventListener("mouseup",function(ev){
+                draggable = false;
+            })
+
+            canvas.addEventListener("mouseout",function(ev){
+                draggable = false;
+            })
+    </script>
+</body>
+</html>

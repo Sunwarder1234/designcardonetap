@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "fabric": "^4.5.1",
+    "qrcode-with-logos": "^1.0.3"
+  },
+  "scripts": {
+    "addmodulefabricjs": "./node_modules/fabric/build.js modules=gesture"
+  }
+}

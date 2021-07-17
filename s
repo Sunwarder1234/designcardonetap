@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Card Creator</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css" integrity="sha512-apX8rFN/KxJW8rniQbkvzrshQ3KvyEH+4szT3Sno5svdr6E/CP0QE862yEeLBMUnCqLko8QaugGkzvWS7uNfFQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css" integrity="sha512-OdEXQYCOldjqUEsuMKsZRj93Ht23QRlhIb8E/X0sbwZhme8eUw6g8q7AdxGJKakcBbv7+/PX0Gc2btf7Ru8cZA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+    .wrap{
+        background-color: #4e5aa5;
+    }
+</style>
+</head>
+<body class="wrap">
+<div class="container">
+
+
+<div class="row">
+
+
+<div class="col-12">
+
+<canvas id="cardcanvas" width="205" style="border-radius: 5px 5px;" height="326">
+
+</canvas>
+
+
+</div>
+
+
+</div>
+<div class="p-5">
+    <button class="btn btn-light download-btn" id="download">Download</button>
+</div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/fontawesome.min.js" integrity="sha512-KCwrxBJebca0PPOaHELfqGtqkUlFUCuqCnmtydvBSTnJrBirJ55hRG5xcP4R9Rdx9Fz9IF3Yw6Rx40uhuAHR8Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/brands.min.js" integrity="sha512-vefaKmSAX3XohXhN50vLfnK12TPIO+4uRpHjXVkX726CqbicEiAQGRzsMTE+EpLkBk4noUcUYu6AQ5af2vfRLA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    
+<script src="./node_modules/fabric/dist/fabric.js">
+    </script>
+    <script>
+
+let fabCanvas = new fabric.Canvas("cardcanvas");
+
+let fabbackgroundOb = new fabric.Rect({
+    top: 0, left : 0, width : $("canvas").width(), height: $("canvas").height(), fill : "#fff"
+});
+let tempImageOb1 = new Image();
+let tempImageOb2 = new Image();
+//tempImageOb1.crossorigin = "Anonymous";
+//tempImageOb2.crossorigin = "Anonymous";
+let tempImageOb3 = new Image();
+// tempImageOb3.crossorigin = "Anonymous";
+
+
+
+tempImageOb1.src ="./thumbnail.png";
+tempImageOb2.src = "./soundeffect.png";
+tempImageOb3.src ="./hearticon.png";
+
+let fabthumbnailSpotifyImage;
+
+    
+let fabHeartIconSpotify
+let fabSoundBarSpotifyImage;
+
+let topInfoSong = 140;
+let topSoundBarEffectSpotify = 144
+let fabTextSongnameSpotify = new fabric.Text("Kei",{
+left : fabbackgroundOb.left+15,
+top : topInfoSong+80, fill : "#212529",
+fontWeight: 600,
+fontSize : 15,
+fontFamily : `-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"`
+})
+let fabTextAuthornameSpotify = new fabric.Text("natLe",{
+    left : fabbackgroundOb.left+15,
+top : topInfoSong+100, fill : "gray",
+fontWeight: 500,
+fontSize : 10,
+fontFamily : `Arial`
+})
+
+
+function thumbnailImageLoaded(){
+        fabthumbnailSpotifyImage = new fabric.Image(tempImageOb1,{
+            top : 25, left: 30, width: 144, height: 144
+
+        })
+        fabCanvas.add(fabthumbnailSpotifyImage)
+        fabCanvas.requestRenderAll();
+    }
+    
+    function heartIconImageLoaded(){
+
+        console.log(tempImageOb3.src); 
+        fabHeartIconSpotify = new fabric.Image(tempImageOb3,{
+    top : topInfoSong+90, left: 170, width: 15, height: 15})
+    fabCanvas.add(fabHeartIconSpotify);
+    fabCanvas.requestRenderAll();
+    }
+    function soundBarSpotifyImageLoaded(){
+        fabSoundBarSpotifyImage = new fabric.Image(tempImageOb2,{
+        top : topSoundBarEffectSpotify+30, left: 10, width: 192, height: 48});
+        fabCanvas.add(fabSoundBarSpotifyImage);
+        fabCanvas.requestRenderAll();
+    }
+
+
+    
+    let arrImageAction = new Array();
+arrImageAction.push(thumbnailImageLoaded,soundBarSpotifyImageLoaded,heartIconImageLoaded);
+let imageArr = [tempImageOb1,tempImageOb2,tempImageOb3];
+
+for(let i = 0 ; i < imageArr.length; i++){
+    imageArr[i].onload = function(ev){
+            
+        arrImageAction[i]();
+            
+    }
+
+}
+
+fabCanvas.add(fabbackgroundOb);
+fabCanvas.add(fabTextAuthornameSpotify);
+fabCanvas.add(fabTextSongnameSpotify);
+    </script>
+
+    <script>
+
+// create control music
+
+let offsetTopSongControl= 280;
+let offsetTopTimeLine = 255;
+
+let fabTimelineSongOb = new fabric.Path("M 10 255 L 192 255 Z",{
+    stroke : "gray",
+    fill : "gray",
+    
+})
+
+let fabThumbSpinnerOb = new fabric.Circle({
+    radius : 5,
+    left: 10,
+    borderColor : "gray",
+    top : offsetTopTimeLine-5, fill : "white"
+  
+    
+})
+
+fabCanvas.add(fabTimelineSongOb);
+fabCanvas.add(fabThumbSpinnerOb);
+let fabRandomSongSVG;
+let randomItonGroup = [];
+fabRandomSongSVG = new fabric.loadSVGFromURL("https://res.cloudinary.com/vivucard/image/upload/v1626186430/spotifycardimage/rbqcvva1ryyqrprq0x5v.svg",
+function(objects,options){
+    let loadedObjects = new fabric.Group(randomItonGroup);
+    loadedObjects.set({
+        top: offsetTopSongControl, left: 10
+    })
+
+    fabCanvas.add(loadedObjects);
+    fabCanvas.requestRenderAll();
+},function(item, object) {
+            object.set('id',item.getAttribute('id'));
+            randomItonGroup.push(object);
+        }
+)
+
+
+let previousSongIconGroup = [];
+
+let fabPreviousSongSVG = new fabric.loadSVGFromURL("https://res.cloudinary.com/vivucard/image/upload/v1626186430/spotifycardimage/bdfj1sdxlqcjddwa74fm.svg",
+function(objects,options){
+    let loadedObjects = new fabric.Group(previousSongIconGroup);
+    loadedObjects.set({
+        top: offsetTopSongControl, left: 50
+    })
+
+    fabCanvas.add(loadedObjects);
+    fabCanvas.requestRenderAll();
+},function(item,object){
+    object.set("id",item.getAttribute("id"));
+    previousSongIconGroup.push(object);
+}
+)
+
+let playIconGroup = [];
+
+let fabPlaySongSVG = new fabric.loadSVGFromURL("https://res.cloudinary.com/vivucard/image/upload/v1626186430/spotifycardimage/xe6d27hsaww6i77nf4l6.svg",
+function(objects,options){
+
+    let loadedObjects = new fabric.Group(playIconGroup);
+    loadedObjects.set({
+        top: offsetTopSongControl,left: 90
+    })
+
+    fabCanvas.add(loadedObjects);
+    fabCanvas.requestRenderAll();
+
+},function(item,object){
+    object.set("id",item.getAttribute("id"));
+    playIconGroup.push(object);
+})
+
+let nextSongIconGroup = [];
+
+let nextSongSVG = new fabric.loadSVGFromURL("https://res.cloudinary.com/vivucard/image/upload/v1626186430/spotifycardimage/mlqj8ujbl3xnz9lkmllm.svg",
+function(object,options){
+    let loadedObjects = new fabric.Group(nextSongIconGroup);
+    loadedObjects.set({
+        top: offsetTopSongControl, left: 130
+    })
+
+    fabCanvas.add(loadedObjects);
+    fabCanvas.requestRenderAll();
+}, function(item,object){
+    object.set("id",item.getAttribute("id"));
+    nextSongIconGroup.push(object);
+}
+)
+
+let replaySongIconGroup = [];
+
+let replaySongSVG = new fabric.loadSVGFromURL("https://res.cloudinary.com/vivucard/image/upload/v1626186430/spotifycardimage/pgaopzizzgscprlwykkd.svg",
+function(object,options){
+    let loadedObjects = new fabric.Group(replaySongIconGroup);
+    loadedObjects.set({
+        top: offsetTopSongControl, left: 170
+    })
+
+    fabCanvas.add(loadedObjects);
+    fabCanvas.requestRenderAll();
+}, function(item,object){
+    object.set("id",item.getAttribute("id"));
+    replaySongIconGroup.push(object);
+}
+)
+
+let fabCircle = new fabric.Circle({
+    radius : 20,
+    fill : "",
+    stroke : "black",
+    strokeWidth: 1,
+    top: offsetTopSongControl-10, left: 77
+})
+
+fabCanvas.add(fabCircle);
+
+let timeStartTextOb = new fabric.Text("0:00",{
+   
+   left: 10, 
+   top : offsetTopTimeLine+10, 
+   fontSize: 7,
+   fontFamily : "Arial",
+   fill : "#525252"
+})
+fabCanvas.add(timeStartTextOb);
+let timeEndTextOb = new fabric.Text("2:55",{
+   
+   left: 179, 
+   top : offsetTopTimeLine+10, 
+   fontSize: 7,
+   fontFamily : "Arial",
+   fill : "#525252"
+})
+fabCanvas.add(timeEndTextOb);
+fabCanvas.requestRenderAll();
+
+
+fabCanvas.requestRenderAll();
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+function saveImg(){    
+
+  
+
+
+    saveAs(fabCanvas.toDataURL({format : "jpeg"}),"spotify vivucard.jpeg");
+}
+
+$("#download").on("click",saveImg);
+    </script>
+</body>
+</html>

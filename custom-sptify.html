@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+
+        body{
+            -webkit-font-smoothing: antialiased;
+            color: white;
+        }
+        
+
+        #vivucardimageeditorwrap{
+            display: none;
+        }
+        .input-image-change-wrap#imagechangeinputwrap span{
+            cursor: pointer;
+            padding: 10px;
+            background: #48cae4;
+            border-radius: 5px 5px;
+            color: white;   
+        }
+        @media only screen and (min-width: 768px){
+            .input-image-change-wrap#imagechangeinputwrap{
+           
+            
+            
+        }
+        .input-image-change-wrap#imagechangeinputwrap span{
+            font-size:1em;
+        }
+        }
+        .input-image-change-wrap#imagechangeinputwrap{
+            margin-top: 20px;
+            display: inline-block;
+        }
+        @media only screen and (max-width: 768px){
+            .input-image-change-wrap#imagechangeinputwrap{
+           
+            
+        }
+        }
+    </style>
+
+<link rel="stylesheet" href="./cropimagepopup.css">
+<link rel="stylesheet" href="./spotifycard.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=1024, initial-scale=0.5, maximum-scale=2.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css" integrity="sha512-apX8rFN/KxJW8rniQbkvzrshQ3KvyEH+4szT3Sno5svdr6E/CP0QE862yEeLBMUnCqLko8QaugGkzvWS7uNfFQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css" integrity="sha512-OdEXQYCOldjqUEsuMKsZRj93Ht23QRlhIb8E/X0sbwZhme8eUw6g8q7AdxGJKakcBbv7+/PX0Gc2btf7Ru8cZA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        html, body {
+   overflow-x: hidden;
+ }
+#uploadimageplacelabel{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(10,10,10,0.5);
+    flex-flow: column;
+    color: rgb(211, 208, 208);
+}
+#uploadimageplacelabel:hover{
+    background-color: rgba(36, 35, 35, 0.5);
+  
+    -webkit-transition: background-color 0.1s linear;
+    -ms-transition: background-color 0.1s linear;
+    transition: background-color 0.1s linear;
+}
+
+.audio-player{
+    
+}
+.mx-4{
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
+}
+#uploadimageplacelabel span{
+    color: rgb(194, 193, 193);
+    font-size: 1.2em;
+}
+.user-info-on-card-wrap{
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    
+}
+.image-on-custom-spotify-wrap{
+    position: relative;
+}
+
+canvas.editor-canvas{
+    
+}
+    </style>
+</head>
+<body style="background-color: #4e5aa5;">
+
+    <div class="body-wrap container">
+          <div class="row">
+            <div class="audio-player col-md-3 col-6 custom-spotify-vivucard-wrap bg-white py-4 mt-4">
+                <div class="audio-thumb mx-4"><img src="./the-thong-minh-tappi-7-1024x1024.jpg" id="themeimage" alt="spotify code"></div>
+                <div class="spotify-code custom-spotify-vivucard mt-1">
+                <img id="toolbarspotify" src="data:image/png;base64,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" alt="spotify code"></div><div class="audio-song flex justify-between mx-2 mb-3"><div class="song-info"><div class="audio-name text-xs font-semibold">Keii</div><div class="audio-author">nhậte</div></div><div class="audio-favorite-sign"><i class="far fa-heart"></i></div></div><div class="audio-timeline"><span class="current-time">0:00</span><span class="total-time">2:55</span><div class="audio-slider"><div class="audio-progress"><div class="pin">
+            
+                </div></div></div></div>
+                <div class="audio-controls flex justify-between items-center">
+                <div class="audio-control px-2"><i class="fas fa-random"></i></div>
+                <div class="audio-control px-2"><i class="fas fa-step-backward"></i></div>
+                <div class="audio-control px-2 audio-play-sign items-center"><i class="fas fa-play"></i></div>
+                <div class="audio-control px-2"><i class="fas fa-step-forward"></i></div>
+                <div class="audio-control px-2"><i class="fas fa-redo-alt"></i></div></div></div>
+    
+    
+                <div class="user-info-on-card-wrap col-md-7 col-6 d-flex">
+                    <form action="" method="POST">
+    
+                             
+                        <div class="image-on-custom-spotify-wrap" class="" style="max-width: 200px;">
+        
+                            <label style="cursor: pointer;" id="uploadimageplacelabel" for="imageonspotify" class="input-label upload-image-label">
+                                <span><i class="fas fa-upload"></i></span>
+                                <p class="input-label-text">Upload an image</p>     
+                                
+                            </label>         
+                            <input type="file" class="d-none" name="imageonspotify" accept="image/*" id="imageonspotify">
+                            <img id="uploadimageplaceholder" class="upload-image-placeholder rounded img-thumbnail img-fluid" style="border-color: white;" src="./the-thong-minh-tappi-7-1024x1024.jpg">
+                                
+                                                
+                        </div>
+                        
+                        <div class="song-name-input-wrap mt-2" id="songnameinput-wrap"> 
+                            <label class="input-label" for="songname">Tên bài hát</label>
+                            <input type="text" class="form-control" id="songname" name="songname">
+                            
+                        </div>
+                        <div class="mt-2 author-name-input-wrap" id="authornameinputwrap"> 
+                            <label class="input-label" for="songname">Tên người trình bày</label>
+                            <input type="text" class="form-control" id="authorname" name="authorname">
+
+                            <input type="hidden" name="base64customspotifyimg" id="base64customspotifyimg">
+                        </div>
+                        <div style="display: none; position: absolute; top: 0; w-75" class="order-form-wrap ">
+                            <div class="order-form-bg">
+                        
+                            </div>
+                        
+                            
+                        
+                            <div class="bg-dark order-form w-75 m-auto">
+                               
+                                <h1 class="text-center text-white">Đăng Kí Thông Tin Mua Hàng</h1>
+                                
+                                
+                                    
+                                    
+                                    
+                                     <label class="text-white fw-bold" for="email">Địa chỉ Email</label>
+                                     <input placeholder="Email" class="form-control" type="email" 
+                                     name="email" id="email">
+                                     <br/>
+                                     <label class="text-white fw-bold" for="phone">SDT</label>
+                                     <input placeholder="Số điện thoại người nhận hàng" type="tel" name="phone" class="form-control" id="phone">
+                                     <br/>
+                                     <label class="text-white fw-bold" for="useraddr">Địa chỉ</label>
+                                     <input placeholder="Địa chỉ nhận hàng" type="text" class="form-control" name="useraddr" id="useraddr">
+                                    
+                                     
+                                     
+                                     <input class="mt-4 btn btn-light" type="button" value="Đặt hàng" id="confirmorderbtn">
+                 <input class="mt-4 btn btn-light d-none" value="Đặt hàng" type="submit" name="submit" id="submit">
+                                   
+                            </div>
+                              
+                        </div>
+                        <div>
+                             
+                            <button type="button" id="orderbtn" class="btn btn-light">
+                                     Đặt mua
+                            </button>
+                        </div>
+                    </form>
+    
+                 
+    
+                </div>
+              
+          </div>
+          
+        
+        <img src="" alt="" id="tempimage" style="display:none;">
+    </div>
+
+    <div id="vivucardimageeditorwrap" class="vivucard-image-editor-wrap fixed inset-0 w-full w-100 col-12 h-full z-50 bg-black bg-opacity-50 duration-300 overflow-y-auto">
+    <div class="relative sm:w-3/4 md:w-3/4 lg:w-1/2 mx-8 sm:mx-auto mt-28 mb-24 opacity-100">
+        <div class="relative image-editor-wrap bg-white shadow-lg rounded-lg text-gray-900 z-20">
+            <div class="topbar-action border-b flex justify-between items-center px-4 py-2">
+                <div class="topbar-action-back exit-editor-popup cursor-pointer w-8">
+                    <i class="text-blue-500 fas fa-arrow-left"></i>
+                </div>
+                <div class="topbar-action-name font-bold">
+                    <span>Edit Media</span></div>
+                    <div class="topbar-action-save">
+                        <button id="applybtn" class="bg-blue-500 apply-btn text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">Apply</button>
+                    </div>
+                </div>
+                <main class="p-3 flex mt-10 text-center overflow-y-auto">
+                    <div class="m-auto pb-10">
+                        
+                        
+                        <canvas style="border: 10px solid #4e5aa5;;" id="customspotifyimagecanvas" width="450" height="450" class="editor-canvas" style="width: 450px; height: 450px; cursor: grab; touch-action: none;">
+                        </canvas>
+                        
+                        <div class="mt-4">
+                            <p>Zoom</p>
+                            <input type="range" class="spotify-user-image-zoom-input" id="spotifyuserimagezoominput" step="0.1" min="1" max="3" value="1">
+                        </div>
+                        <div class="text-left input-image-change-wrap" id="imagechangeinputwrap">
+                            <label for="spotifyuserimagechangeinput"><span style="font-size:1rem;"><i class="far fa-image"></i></span></label>
+                            <input type="file" class="spotify-user-image-change-input" accept="image/*" id="spotifyuserimagechangeinput" style="display: none;">
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/fontawesome.min.js" integrity="sha512-KCwrxBJebca0PPOaHELfqGtqkUlFUCuqCnmtydvBSTnJrBirJ55hRG5xcP4R9Rdx9Fz9IF3Yw6Rx40uhuAHR8Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/brands.min.js" integrity="sha512-vefaKmSAX3XohXhN50vLfnK12TPIO+4uRpHjXVkX726CqbicEiAQGRzsMTE+EpLkBk4noUcUYu6AQ5af2vfRLA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="./node_modules/fabric/dist/fabric.js"></script>
+    <script>
+       
+    </script>
+    <script>
+
+        $("label#uploadimageplacelabel").on("click",function(ev){
+            if($("#imageonspotify").val() !== ""){
+                $(this).attr("for","");
+                $("div#vivucardimageeditorwrap").show();
+            }
+            else{
+                $(this).attr("for","imageonspotify");
+            }
+        })
+    </script>
+    <script>
+
+    function applyImageEditorHander(){
+        document.querySelector("#customspotifyimagecanvas").toBlob(function(blob){
+                      
+        imageURL = URL.createObjectURL(blob);
+        $("img#uploadimageplaceholder").attr("src", imageURL);
+        $("#themeimage").attr("src",imageURL);
+        let blobReader = new FileReader();
+        blobReader.readAsDataURL(blob);
+        blobReader.onload =  function(ev){
+            $("input#base64customspotifyimg").val(blobReader.result);
+        }                  
+        $("input#base64customspotifyimg").val();
+        $("img#uploadimageplaceholder")[0].onload = function(ev){
+            URL.revokeObjectURL(imageURL);
+        }
+
+        })
+    }
+
+    function showPreviewImageOnCard(fabcanvas){
+        
+            let imageURL = fabcanvas.toDataURL();
+            
+            
+                                    
+                     
+            $("img#uploadimageplaceholder").attr("src", imageURL);
+            $("#themeimage").attr("src",imageURL);
+
+
+          
+          
+          
+       }
+       function prepareForLoadImageInput(targetInput){
+        targetInput.on("input",function(ev){
+            let reader = new FileReader();
+            let imageBase64;
+            reader.readAsDataURL(ev.target.files[0]);
+            reader.onload = function(ev){
+               imageBase64 = ev.target.result;
+               console.log(ev.target.result);
+               
+               
+               tempimage = $("#tempimage")[0];
+               tempimage.src = imageBase64;
+               tempimage.onload = function(e){
+                   imageCanvas.clear();
+                   $("#vivucardimageeditorwrap").fadeIn();             
+                   fabImageInstance = new fabric.Image(tempimage,{top : 0,left : 0, lockRotation: true, centeredScaling: true, centeredRotation : true, angle: false})
+                   
+                   imageCanvas.add(fabImageInstance);
+                   fabImageInstance.scaleToHeight(450);
+                   fabImageInstance.scaleToWidth(450);
+                   showPreviewImageOnCard(imageCanvas);
+                   imageCanvas.requestRenderAll();
+                   
+               }
+               
+
+
+               
+               
+               /*$("#uploadimageplaceholder")[0].src = imageCanvas.toDataURL();
+               $("#themeimage")[0].src = imageCanvas.toDataURL();*/
+            }
+
+            
+
+
+            
+        })
+
+       }
+        let songnameinput = $("input#songname");
+        let authornameinput = $("input#authorname");
+
+        songnameinput.on("input",function(ev){
+            $(".audio-name").text(ev.target.value);     
+        })
+
+
+        authornameinput.on("input",function(ev){
+            $(".audio-author").text(ev.target.value);
+        })
+
+        let tempimage;
+        let imageonspotifyinput = $("input#imageonspotify");
+        let imageCanvas = new fabric.Canvas("customspotifyimagecanvas")
+        var fabImageInstance
+        let canvasContextImage = imageCanvas.getContext("2d");
+        let canvasWidth = $("canvas#customspotifyimagecanvas").width();
+        let canvasHeight = $("canvas#customspotifyimagecanvas").height();
+        
+          //Regis event for input image for first times input
+
+        prepareForLoadImageInput(imageonspotifyinput);
+            
+
+          //Regis event for input image change in edit image Popup
+        prepareForLoadImageInput($("input#spotifyuserimagechangeinput"));
+            
+        
+
+        let zoomInput = document.querySelector("#spotifyuserimagezoominput");
+        function zoomImage(ev){
+            
+        
+            fabImageInstance.scaleToWidth(ev.target.value * 450)
+            fabImageInstance.scaleToHeight(ev.target.value * 450)
+               
+            
+            
+            
+            imageCanvas.requestRenderAll();
+            
+        }
+        zoomInput.addEventListener("input",zoomImage);
+        imageCanvas.on("object:moving",function(ev){
+            
+            
+        }, false)
+
+        
+        
+    </script>
+<script>
+
+$("#applybtn").on("click",function(ev){
+    $("div#vivucardimageeditorwrap").fadeOut();
+    applyImageEditorHander();
+    
+})
+
+$(".exit-editor-popup").on("click",function(ev){
+    $("div#vivucardimageeditorwrap").fadeOut();
+})
+
+
+
+</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+<script>
+
+let orderFormWrap = document.querySelector("div.order-form-wrap");
+let orderFormBGEl = orderFormWrap.querySelector("div.order-form-bg");
+orderFormBGEl.addEventListener("click",function(ev){
+    
+    $(orderFormWrap).fadeOut(); 
+
+})
+
+orderFormWrap.addEventListener("click",function(ev){
+ev.stopImmediatePropagation();
+})
+    $("#orderbtn").get(0).addEventListener("click",function(ev){
+        $(".order-form-wrap").fadeIn();
+    })
+</script>
+<script src="./vivucardedmdiacustomspotify.js"></script>
+
+
+<script>
+let emailInput = $("input#email");
+	
+
+	let phone = document.querySelector("input#phone");
+	let address = document.querySelector("input#useraddr");
+	
+	
+	$("#confirmorderbtn").on("click",function(ev){
+		if(emailInput.val()==="" || nameInput.value === "" || phone.value ==="" || address.value === ""){
+	                  alert("Vui lòng điền đầy đủ thông tin.");
+	     
+		
+	     }
+	
+	     else{
+		    let formData1 = new FormData();
+			formData1.append('file',$("#base64customspotifyimg").val());
+
+			formData1.append('upload_preset',"vivucard");
+			formData1.append('folder',"custom-card");
+
+			const CL_NAME = "Vivucard";
+			let CL_BASE_URL = "https://api.cloudinary.com/v1_1/vivucard/image/upload"
+
+			let requestCloudOptions1 = {
+				url : CL_BASE_URL,
+				method : "POST",
+					data : formData1
+			}
+
+			
+
+			axios(
+			requestCloudOptions1
+			).then(res=>{
+				$("#base64customspotifyimg")[0].value = res.data.public_id;
+                $("form#orderform #submit").click();
+
+			}).catch(err=>{
+
+
+			})
+
+	
+    	}
+	
+     
+	
+	})
+
+</script>
+
+
+</body>
+</html>

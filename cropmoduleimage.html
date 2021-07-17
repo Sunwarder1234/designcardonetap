@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./cropimagepopup.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="fixed inset-0 w-full h-full z-50 bg-black bg-opacity-50 duration-300 overflow-y-auto">
+        <div class="relative sm:w-3/4 md:w-3/4 lg:w-1/2 mx-8 sm:mx-auto mt-28 mb-24 opacity-100">
+            <div class="relative bg-white shadow-lg rounded-lg text-gray-900 z-20">
+                <div class="topbar-action border-b flex justify-between items-center px-4 py-2">
+                    <div class="topbar-action-back cursor-pointer w-8">
+                        <i class="text-blue-500 fas fa-arrow-left"></i>
+                    </div>
+                    <div class="topbar-action-name font-bold">
+                        <span>Edit Media</span></div>
+                        <div class="topbar-action-save">
+                            <button class="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">Apply</button>
+                        </div>
+                    </div>
+                    <main class="p-3 flex mt-10 text-center overflow-y-auto">
+                        <div class="m-auto pb-10">
+                            <canvas width="450" height="450" class="editor-canvas" style="width: 450px; height: 450px; cursor: grab; touch-action: none;">
+
+                            </canvas>
+                            <div class="mt-4">
+                                <p>Zoom</p>
+                                <input type="range" class="spotify-user-image-zoom-input" id="spotifyuserimagezoominput" step="0.1" min="1" max="3" value="1">
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script>
+           
+        </script>
+</body>
+</html>

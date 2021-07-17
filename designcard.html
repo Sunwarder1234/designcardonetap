@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Card Creator</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css" integrity="sha512-apX8rFN/KxJW8rniQbkvzrshQ3KvyEH+4szT3Sno5svdr6E/CP0QE862yEeLBMUnCqLko8QaugGkzvWS7uNfFQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css" integrity="sha512-OdEXQYCOldjqUEsuMKsZRj93Ht23QRlhIb8E/X0sbwZhme8eUw6g8q7AdxGJKakcBbv7+/PX0Gc2btf7Ru8cZA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+    .wrap{
+        background-color: #4e5aa5;
+    }
+</style>
+</head>
+<body class="wrap">
+<div class="container">
+
+
+<div class="row">
+
+
+<div class="col-6">
+
+<canvas id="cardcanvas" width="346" style="border-radius: 5px 5px;" height="225">
+
+</canvas>
+
+<div class="mt-5">
+<input type="file" id="backgroundcard"> 
+</div>
+
+<div class="mt-5">
+    <input type="input" class="form-control" placeholder="Gradient color" id="gradientinput"> 
+</div>
+
+</div>
+<div claas="col-6">
+    <div class="text-center m-5">
+        <span>Link QRCode</span><input value="https://vivucard.com/user/" class="form-control" placeholder="Link qrcode" type="input" name="qrcodelink" id="qrcodelink">
+    </div>
+    <div class="m-5"> 
+           <span>Background Color</span><input type="color" id="backgroundcard">
+    </div>
+    <div class="m-5"><span>Logo QRcode</span> <input class="form-control" type="file" accept="image/*" id="logoqrcode" ></div>
+    <div class="m-5"><button id="generateqrcodewithlogo" class="btn btn-light">Generate QRCODE With Logo</button></div>
+    <div class="m-5"><button id="generateqrcodewithoutlogo" class="btn btn-light">Generate QRCODE Without Logo</button></div>
+    <div class="m-5"><span>QRcode Width </span> <input class="form-control" value="100" type="input" id="qrcodewidth" ></div>
+    <div class="m-5"><span>QRcode Height</span> <input class="form-control" value="10" type="input" id="qrcodeheight" ></div>
+</div>
+<div>
+    <button id="download" name="download" class="btn btn-light">Download Card</button>
+</div>
+
+</div>
+
+
+<img src="" alt="" id="qrcodeplaceholder">
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/fontawesome.min.js" integrity="sha512-KCwrxBJebca0PPOaHELfqGtqkUlFUCuqCnmtydvBSTnJrBirJ55hRG5xcP4R9Rdx9Fz9IF3Yw6Rx40uhuAHR8Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/brands.min.js" integrity="sha512-vefaKmSAX3XohXhN50vLfnK12TPIO+4uRpHjXVkX726CqbicEiAQGRzsMTE+EpLkBk4noUcUYu6AQ5af2vfRLA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    
+    <script src="./node_modules/qrcode-with-logos/dist/qrcode-with-logos.umd.min.js"></script>
+    
+<script src="./node_modules/fabric/dist/fabric.js?v=21"></script>
+    
+    <script>
+let thumbnailImageName;
+let backgroundFilled = "#000";
+let fabCanvas = new fabric.Canvas("cardcanvas");
+fabCanvas.set({
+    lockMovementX : "true", lockMovementY : "true", lockUniScaling : "true", lockScalingX : "true", lockScalingY : "true"
+})
+
+let bgGradient;
+
+
+let baseColor = "#000";
+let fabbackgroundOb = new fabric.Rect({
+    top: 0, left : 0, width : $("canvas").width(), height: $("canvas").height(), fill : backgroundFilled,selectable: "false"
+});
+
+
+
+let fabName = new fabric.Text("Hoàng Nhật Tiến",{
+    left : 15,
+top : 177, fill : baseColor,
+fontWeight: 500,
+fontSize : 20,
+fontFamily : `Arial`
+})
+fabbackgroundOb.set({
+    lockMovementX : "true", lockMovementY : "true", lockUniScaling : "true", lockScalingX : "true", lockScalingY : "true"
+})
+fabbackgroundOb.on("mouse:down",function(ev){
+    return false;
+})
+fabbackgroundOb.on("object:click",function(ev){
+    return false;
+})
+fabCanvas.add(fabbackgroundOb);
+fabCanvas.add(fabName);
+fabCanvas.requestRenderAll();
+function changeBackground(ev){
+    fabCanvas.remove(fabCanvas.getObjects());
+    fabbackgroundOb.set("fill",ev.target.value);
+    fabCanvas.add(fabbackgroundOb);
+    fabCanvas.add(qrcodescanner5);
+    fabCanvas.add(qrscannercorner3);
+    fabCanvas.add(qrscannercorner4);
+    fabCanvas.add(qrscannercorner1);
+    fabCanvas.add(qrscannercorner2);
+    addLogoSVG();    
+    fabCanvas.add(fabName);
+    fabCanvas.requestRenderAll();  
+   
+}
+function renderAllAfterChanges(){
+    fabCanvas.remove(fabCanvas.getObjects());
+    
+    fabCanvas.add(fabbackgroundOb);
+    fabCanvas.add(qrcodescanner5);
+    fabCanvas.add(qrscannercorner3);
+    fabCanvas.add(qrscannercorner4);
+    fabCanvas.add(qrscannercorner1);
+    fabCanvas.add(qrscannercorner2);
+    addLogoSVG();    
+    fabCanvas.add(fabName);
+    fabCanvas.requestRenderAll();  
+}
+$("#backgroundcard")[0].addEventListener("input",changeBackground);
+addLogoSVG();  
+
+function addLogoSVG(){
+    let logoGroup = []
+let fabLogoSVG = new fabric.loadSVGFromURL("https://res.cloudinary.com/vivucard/image/upload/v1626319688/logo/a6etdjtchw9e1ssjdnuu.svg",
+function(objects,options){
+    let loadedObjects = new fabric.Group(logoGroup);
+    loadedObjects.set({
+        top: 10, left: 10
+    })
+
+    fabCanvas.add(loadedObjects);
+    fabCanvas.requestRenderAll();
+},function(item, object) {
+            object.set('id',item.getAttribute('id'));
+            logoGroup.push(object);
+        }
+)
+
+}
+
+
+let qrscannercorner1 = new fabric.Path("M 20 110  L 20 100 L 30 100",{
+    strokeWidth : 2, stroke : baseColor, fill : "rgba(0,0,0,0)"
+})
+let qrscannercorner2 = new fabric.Path("M 20 120 L 20 130 L 30 130",{
+    strokeWidth : 2, stroke : baseColor,fill : "rgba(0,0,0,0)"
+})
+let qrscannercorner3 = new fabric.Path("M 50 110  L 50 100 L 40 100",{
+    strokeWidth : 2, stroke : baseColor,fill : "rgba(0,0,0,0)"
+})
+let qrscannercorner4 = new fabric.Path("M 50 120 L 50 130 L 40 130",{
+    strokeWidth : 2, stroke : baseColor,fill : "rgba(0,0,0,0)"
+})
+let qrcodescanner5 = new fabric.Path("M 22 115 L 48 115",{
+    strokeWidth : 2, stroke : baseColor,fill : "rgba(0,0,0,0)"
+});
+
+fabCanvas.add(qrcodescanner5);
+fabCanvas.add(qrscannercorner3);
+fabCanvas.add(qrscannercorner4);
+fabCanvas.add(qrscannercorner1);
+fabCanvas.add(qrscannercorner2);
+fabCanvas.requestRenderAll();
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+function saveImg(){    
+
+  
+
+
+    saveAs(fabCanvas.toDataURL({format : "png"}),"Classic vivucard.png");
+}
+
+$("#download").on("click",saveImg);
+    </script>
+
+
+<script>
+    let prefixWidth = "w_";
+    let prefixHeight = "h_";
+    let imageLink;
+    
+    $("#downloadimagefromcdn").on("click",function(ev){
+        if($("input#imagelink").val()[$("input#imagelink").val().length-1] == "/"){
+            imageLink = $("input#imagelink").val().substring(0,$("input#imagelink").val().length - 1);
+        }
+        imageLink = $("input#imagelink").val();
+        let width = prefixWidth + $("#imagewidth").val();
+        let height = prefixHeight + $("#imageheight").val();
+        imageLink = imageLink.replace("upload","upload/"+width+","+height);
+        
+        thumbnailImageName = imageLink.split("/").pop();
+        console.log(thumbnailImageName);
+        saveAs(imageLink,thumbnailImageName);
+        
+    })
+    function renderQRCode(){
+        let fabQRCodeImage = new fabric.Image($("#qrcodeplaceholder")[0],{
+            left: 220, top: 30
+        })
+        fabCanvas.add(fabQRCodeImage);
+        fabCanvas.requestRenderAll();
+    }
+    function generateQRCodeWithouLogo(){
+        let qrcode = new QrCodeWithLogo({
+            image : $("#qrcodeplaceholder")[0],
+            content : $("#qrcodelink").val(),
+            width: $("#qrcodewidth").val(),
+            height : $("#qrcodeheight").val(),
+            nodeQrCodeOptions:{
+                margin : 0.5
+            }
+        }).toImage();
+
+        $("#qrcodeplaceholder")[0].onload = function(ev){
+            renderQRCode();
+        }
+    }
+    function generateQRCodeWithLogo(){
+        let qrcode = new QrCodeWithLogo({
+            image : $("#qrcodeplaceholder")[0],
+            content : $("#qrcodelink").val(),
+            width: $("#qrcodewidth").val(),
+            height : $("#qrcodeheight").val(),
+            logo : {
+                    logoRadius : 50, 
+                    logoBorderRadius : 50,
+                    logoSize : 0.2,
+                    borderSize : 0.02,
+            },
+            nodeQrCodeOptions:{
+                margin : 0.5
+            }
+            
+        });
+        let imageBase;
+        
+              
+                    if($("#logoqrcode").val() == ""){
+                        alert("No image input. Input a photo!");
+                    }
+                    else{
+                        let file = $("#logoqrcode")[0].files[0];
+                        let reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        
+                        
+                        
+                        reader.onload = function(ev){
+                            imagebase64 = ev.target.result;
+                            $("#logoqrcode")[0].src = imagebase64;
+                            console.log(qrcode);
+                            qrcode.defaultOption.logo.src = imagebase64;      
+                            
+                            qrcode.toImage();
+                     
+                        }
+                        
+                        
+                    }
+              
+       
+        $("#qrcodeplaceholder")[0].onload = function(ev){
+            renderQRCode();
+        }
+    }
+
+    $("#generateqrcodewithlogo").on("click",function(ev){
+        generateQRCodeWithLogo();
+    })
+
+    $("#generateqrcodewithoutlogo").on("click",function(ev){
+        generateQRCodeWithouLogo();
+    })
+    function group(){
+        var activegroup = canvas.getActiveGroup();
+    var objectsInGroup = activegroup.getObjects();
+
+    activegroup.clone(function(newgroup) {
+        canvas.discardActiveGroup();
+        objectsInGroup.forEach(function(object) {
+            canvas.remove(object);  
+        });
+        canvas.add(newgroup);
+
+    });
+    }
+
+    $("#backgroundcard").on("change",function(ev){
+        let fileReader = new FileReader();
+        let image = new Image();
+        console.log(fileReader);
+        fileReader.readAsDataURL(this.files[0]);
+        fileReader.onload = function(ev){
+            image.src = ev.target.result;
+            fabbackgroundOb = new fabric.Image(image,{
+                top : fabbackgroundOb.top || 0 , left : fabbackgroundOb.left|| 0, width : fabCanvas.width, height : fabCanvas.height
+            });
+            renderAllAfterChanges();
+        }
+    })
+
+    $("#gradientinput").on("blur",function(ev){
+        let arrColor = new Array();
+        arrColor = $("#gradientinput").val().split(" ");
+        bgGradient = new fabric.Gradient({
+            type : "linear",
+
+            gradientUnits : "pixels",
+            coords : {
+                x1: 0, x2 : fabbackgroundOb.width,
+                x2 : 0,
+                y2 : fabbackgroundOb.height
+            },
+            colorStops : (function(){
+                let gradimentElmentsObject = [];
+                
+                for(let i = 0 ; i < arrColor.length ; i++){
+                    let ob = {"offset" : "", "color": ""};    
+                    ob.offset = i/arrColor.length;
+                    ob.color = arrColor[i];
+
+                    gradimentElmentsObject.push(ob);
+                     
+                }
+                console.log(gradimentElmentsObject);
+                return gradimentElmentsObject;
+            }())
+
+        }) 
+        console.log(bgGradient);
+        fabbackgroundOb.set("fill",bgGradient);
+        renderAllAfterChanges();
+    })
+</script>
+</body>
+</html>
